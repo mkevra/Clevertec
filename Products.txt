@@ -1,0 +1,9 @@
+Cucumber; 2.70; false
+Avocado; 1.70; false
+Carrot; 0.80; true
+Okra; 1.20; false
+Mushrooms; 2.20; true
+Olive; 1.70; false
+Radish; 1.20; false
+Salad; 0.80; false
+Spinach; 1.10; false
