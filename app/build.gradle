@@ -9,6 +9,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'java-library'
 }
 
 repositories {
@@ -29,4 +30,39 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass = 'ru.Clevertec.App'
+}
+
+public class CustomGradleTask extends DefaultTask {
+    @Input
+    String sourceUrl;
+
+    @OutputFile
+    File target;
+
+    @TaskAction
+    void downoload() throws IOException {
+        try {
+            URL url = new URL(sourceUrl);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            try (BufferedInputStream bufferedInputStream = new BufferedInputStream(httpURLConnection.getInputStream());
+                 FileOutputStream fileOutputStream = new FileOutputStream(target);
+                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream, 1024)) {
+
+
+                byte[] buffer = new byte[1024];
+                int read = 0;
+
+                while ((read = bufferedInputStream.read(buffer, 0, 1024)) >= 0) {
+                    bufferedOutputStream.write(buffer, 0, read);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+task downoloadFile(type: CustomGradleTask) {
+    sourceUrl = "https://drive.google.com/file/d/1clwNxdkHsIvYdD7ET5XgqyaQbOwOruzk/view?usp=sharing"
+    target = new File("src/main/resources/check.jpg")
 }
