@@ -32,14 +32,7 @@ public abstract class FileDownoloaderPlugin implements Plugin<Project> {
                             while ((read = bufferedInputStream.read(buffer, 0, 1024)) >= 0) {
                                 bufferedOutputStream.write(buffer, 0, read);
                             }
-                            bufferedInputStream.close();
-                            fileOutputStream.close();
-                            bufferedOutputStream.close();
                         }
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
